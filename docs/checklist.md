@@ -57,14 +57,14 @@ Authoritative specification: [BlockLib_PLAN.md](../BlockLib_PLAN.md)
 - [x] Transaction lookup and state sync/reconciliation APIs
 
 ### Phase 6 — Admin portal
-- [ ] Admin login & authorized wallet check
-- [ ] Admin dashboard (statistic cards)
-- [ ] Book management (list, search, register book, add copies)
-- [ ] Member management (register student, link wallet, activate/deactivate)
-- [ ] Lending management (active loans, return confirmation, overdue status)
-- [ ] Reservations queue view
-- [ ] Fine management & settlement inspection
-- [ ] Transaction history view
+- [x] Admin login & authorized wallet verification
+- [x] Admin dashboard (statistic cards)
+- [x] Book management (list, search, register book, add copies)
+- [x] Member management (register student, link wallet, activate/deactivate)
+- [x] Lending management (active loans, return confirmation, overdue status)
+- [x] Reservations queue view
+- [x] Fine management & settlement inspection
+- [x] Transaction history view
 
 ### Phase 7 — Student portal
 - [ ] Student login & linked wallet verification

@@ -7,6 +7,7 @@ import { bookRouter } from './routes/bookRoutes.js';
 import { memberRouter } from './routes/memberRoutes.js';
 import { transactionRouter } from './routes/transactionRoutes.js';
 import { dashboardRouter } from './routes/dashboardRoutes.js';
+import { lendingRouter } from './routes/lendingRoutes.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { startEventIndexer } from './blockchain/eventIndexer.js';
 
@@ -21,6 +22,7 @@ app.use('/api/books', bookRouter);
 app.use('/api/members', memberRouter);
 app.use('/api/transactions', transactionRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api', lendingRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
