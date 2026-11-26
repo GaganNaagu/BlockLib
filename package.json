@@ -1,0 +1,23 @@
+{
+  "name": "blocklib",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Blockchain-Based Library Book Lending System (Course 22CS732)",
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "apps/blockchain"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace=apps/web run dev",
+    "dev:api": "npm --workspace=apps/api run dev",
+    "node:blockchain": "npm --workspace=apps/blockchain run node",
+    "deploy:blockchain": "npm --workspace=apps/blockchain run deploy",
+    "test:blockchain": "npm --workspace=apps/blockchain test",
+    "build:web": "npm --workspace=apps/web run build",
+    "build:api": "npm --workspace=apps/api run build",
+    "prisma:generate": "prisma generate --schema=prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
+    "prisma:seed": "npm --workspace=apps/api run prisma:seed"
+  }
+}
