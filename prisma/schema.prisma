@@ -12,6 +12,12 @@ enum Role {
   STUDENT
 }
 
+enum TxStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
 model User {
   id            String   @id @default(cuid())
   name          String
@@ -20,17 +26,52 @@ model User {
   passwordHash  String
   role          Role     @default(STUDENT)
   walletAddress String?  @unique
+  walletNonce   String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
 
 model Book {
-  id          String   @id @default(cuid())
-  chainBookId Int      @unique
+  id          String     @id @default(cuid())
+  chainBookId Int        @unique
   title       String
   author      String
-  isbn        String   @unique
+  isbn        String     @unique
   category    String
+  copies      BookCopy[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model BookCopy {
+  id          String   @id @default(cuid())
+  chainCopyId Int      @unique
+  bookId      String
+  book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
+
+model BlockchainTransaction {
+  id          String   @id @default(cuid())
+  txHash      String   @unique
+  blockNumber Int?
+  fromAddress String
+  eventType   String
+  status      TxStatus @default(PENDING)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model BlockchainEvent {
+  id             String   @id @default(cuid())
+  txHash         String
+  logIndex       Int
+  eventName      String
+  entityId       String?
+  blockNumber    Int
+  blockTimestamp DateTime
+  payload        Json
+  createdAt      DateTime @default(now())
+
+  @@unique([txHash, logIndex])
 }

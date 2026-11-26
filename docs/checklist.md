@@ -50,11 +50,11 @@ Authoritative specification: [BlockLib_PLAN.md](../BlockLib_PLAN.md)
 - [x] Contract and testing documentation (`docs/smart-contracts.md`, `docs/testing.md`)
 
 ### Phase 5 — Backend integration
-- [ ] Complete Prisma schema (`User`, `Book`, `BookCopy`, `BlockchainTransaction`, `BlockchainEvent`)
-- [ ] Nonce-based wallet signature verification
-- [ ] Profile and book metadata APIs
-- [ ] Read-only provider and idempotent event indexer (`(txHash, logIndex)`)
-- [ ] Transaction lookup and state reconciliation APIs
+- [x] Complete Prisma schema (`User`, `Book`, `BookCopy`, `BlockchainTransaction`, `BlockchainEvent` with unique `(txHash, logIndex)`)
+- [x] Nonce-based wallet signature verification (`/api/auth/wallet-nonce`, `/api/auth/verify-wallet`)
+- [x] Profile, book metadata, member, and dashboard APIs
+- [x] Read-only provider and idempotent event indexer (`(txHash, logIndex)`)
+- [x] Transaction lookup and state sync/reconciliation APIs
 
 ### Phase 6 — Admin portal
 - [ ] Admin login & authorized wallet check
