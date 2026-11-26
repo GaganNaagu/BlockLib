@@ -42,11 +42,12 @@ Authoritative specification: [BlockLib_PLAN.md](../BlockLib_PLAN.md)
 - [x] All required events (`BookRegistered`, `BookCopyRegistered`, `MemberRegistered`, `BookBorrowed`, `BookReturned`, `BookReserved`, `ReservationCancelled`, `ReservationAllocated`, `FineSettled`)
 
 ### Phase 4 — Contract tests and deployment
-- [ ] Access and registration tests
-- [ ] Borrowing rule tests
-- [ ] Return and fine calculation/settlement tests
-- [ ] Reservation queue and allocation tests
-- [ ] Deployment script (`apps/blockchain/scripts/deploy.ts`) exporting address/ABI
+- [x] Access and registration tests
+- [x] Borrowing rule tests
+- [x] Return and fine calculation/settlement tests
+- [x] Reservation queue and allocation tests
+- [x] Deployment script (`apps/blockchain/scripts/deploy.ts`) exporting address/ABI
+- [x] Contract and testing documentation (`docs/smart-contracts.md`, `docs/testing.md`)
 
 ### Phase 5 — Backend integration
 - [ ] Complete Prisma schema (`User`, `Book`, `BookCopy`, `BlockchainTransaction`, `BlockchainEvent`)
