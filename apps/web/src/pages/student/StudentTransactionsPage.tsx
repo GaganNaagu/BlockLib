@@ -2,25 +2,29 @@ import { useCallback, useEffect, useState } from 'react';
 import { ArrowsClockwise } from '@phosphor-icons/react';
 import { AppLayout } from '../../layouts/AppLayout';
 import { useAuth } from '../../context/AuthContext';
+import { useWallet } from '../../context/WalletContext';
 import { apiRequest } from '../../services/api';
 import { shortenAddress } from '../../blockchain/libraryContract';
 import type { BlockchainTxItem } from '../../types/library';
 
 export function StudentTransactionsPage() {
   const { user, token } = useAuth();
+  const { account } = useWallet();
   const [transactions, setTransactions] = useState<BlockchainTxItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
 
+  const activeWallet = account ?? user?.walletAddress ?? '';
+
   const loadTransactions = useCallback(async () => {
-    if (!token || !user?.walletAddress) {
+    if (!token || !activeWallet) {
       setLoading(false);
       return;
     }
     setLoading(true);
     try {
       const data = await apiRequest<{ transactions: BlockchainTxItem[] }>(
-        `/api/transactions?wallet=${encodeURIComponent(user.walletAddress)}`,
+        `/api/transactions?wallet=${encodeURIComponent(activeWallet)}`,
         { method: 'GET' },
         token,
       );
@@ -28,7 +32,7 @@ export function StudentTransactionsPage() {
     } finally {
       setLoading(false);
     }
-  }, [token, user?.walletAddress]);
+  }, [token, activeWallet]);
 
   useEffect(() => {
     void loadTransactions();

@@ -10,29 +10,33 @@ import type { ReservationItem } from '../../types/library';
 
 export function StudentReservationsPage() {
   const { user, token } = useAuth();
-  const { isVerified, matchesProfileWallet, connectAndVerify } = useWallet();
+  const { account, isVerified, matchesProfileWallet, connectAndVerify } = useWallet();
 
   const [reservations, setReservations] = useState<ReservationItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [txStatus, setTxStatus] = useState<TxStatusState>({ status: 'idle', message: '' });
 
+  const activeWallet = account ?? user?.walletAddress ?? '';
+
   const loadReservations = useCallback(async () => {
-    if (!token || !user?.walletAddress) {
+    if (!token || !activeWallet) {
       setLoading(false);
       return;
     }
     setLoading(true);
     try {
       const data = await apiRequest<{ reservations: ReservationItem[] }>(
-        `/api/reservations?wallet=${encodeURIComponent(user.walletAddress)}`,
+        `/api/reservations?wallet=${encodeURIComponent(activeWallet)}`,
         { method: 'GET' },
         token,
       );
       setReservations(data.reservations);
+    } catch (err) {
+      setTxStatus({ status: 'failed', message: (err as Error).message });
     } finally {
       setLoading(false);
     }
-  }, [token, user?.walletAddress]);
+  }, [token, activeWallet]);
 
   useEffect(() => {
     void loadReservations();

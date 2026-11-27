@@ -9,29 +9,33 @@ import type { LendingRecordItem } from '../../types/library';
 
 export function StudentLoansPage() {
   const { user, token } = useAuth();
-  const { isVerified, matchesProfileWallet, connectAndVerify } = useWallet();
+  const { account, isVerified, matchesProfileWallet, connectAndVerify } = useWallet();
 
   const [records, setRecords] = useState<LendingRecordItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [txStatus, setTxStatus] = useState<TxStatusState>({ status: 'idle', message: '' });
 
+  const activeWallet = account ?? user?.walletAddress ?? '';
+
   const loadLoans = useCallback(async () => {
-    if (!token || !user?.walletAddress) {
+    if (!token || !activeWallet) {
       setLoading(false);
       return;
     }
     setLoading(true);
     try {
       const data = await apiRequest<{ records: LendingRecordItem[] }>(
-        `/api/lending?wallet=${encodeURIComponent(user.walletAddress)}`,
+        `/api/lending?wallet=${encodeURIComponent(activeWallet)}`,
         { method: 'GET' },
         token,
       );
       setRecords(data.records);
+    } catch (err) {
+      setTxStatus({ status: 'failed', message: (err as Error).message });
     } finally {
       setLoading(false);
     }
-  }, [token, user?.walletAddress]);
+  }, [token, activeWallet]);
 
   useEffect(() => {
     void loadLoans();
