@@ -67,14 +67,14 @@ Authoritative specification: [BlockLib_PLAN.md](../BlockLib_PLAN.md)
 - [x] Transaction history view
 
 ### Phase 7 — Student portal
-- [ ] Student login & linked wallet verification
-- [ ] Student dashboard
-- [ ] Book catalogue & search with copy availability
-- [ ] Borrow available copy & reserve unavailable title
-- [ ] Cancel reservation
-- [ ] My Loans & lending history
-- [ ] My Fines & simulated fine settlement
-- [ ] My Transactions view
+- [x] Student login & linked wallet verification
+- [x] Student dashboard
+- [x] Book catalogue & search with copy availability
+- [x] Borrow available copy & reserve unavailable title
+- [x] Cancel reservation
+- [x] My Loans & lending history
+- [x] My Fines & simulated fine settlement
+- [x] My Transactions view
 
 ### Phase 8 — End-to-end testing
 - [ ] Verify full 15-step scenario with 1 admin wallet and 2+ student wallets

@@ -12,6 +12,11 @@ import { AdminReservationsPage } from './pages/admin/AdminReservationsPage';
 import { AdminFinesPage } from './pages/admin/AdminFinesPage';
 import { AdminTransactionsPage } from './pages/admin/AdminTransactionsPage';
 import { StudentDashboardPage } from './pages/student/StudentDashboardPage';
+import { StudentCataloguePage } from './pages/student/StudentCataloguePage';
+import { StudentLoansPage } from './pages/student/StudentLoansPage';
+import { StudentReservationsPage } from './pages/student/StudentReservationsPage';
+import { StudentFinesPage } from './pages/student/StudentFinesPage';
+import { StudentTransactionsPage } from './pages/student/StudentTransactionsPage';
 
 function RootRedirect() {
   const { user, isLoading } = useAuth();
@@ -100,6 +105,46 @@ export function App() {
               element={
                 <ProtectedRoute allowedRoles={['STUDENT']}>
                   <StudentDashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/catalogue"
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <StudentCataloguePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/loans"
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <StudentLoansPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/reservations"
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <StudentReservationsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/fines"
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <StudentFinesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/transactions"
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <StudentTransactionsPage />
                 </ProtectedRoute>
               }
             />
