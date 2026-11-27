@@ -170,6 +170,8 @@ export async function syncPastEvents(fromBlock = 0): Promise<{ indexed: number; 
 }
 
 let indexerStarted = false;
+let lastSyncedBlock = 0;
+let isSyncing = false;
 
 export function startEventIndexer(): void {
   if (indexerStarted) return;
@@ -180,33 +182,34 @@ export function startEventIndexer(): void {
   }
 
   indexerStarted = true;
-  void syncPastEvents(0);
 
-  const eventNames = [
-    'BookRegistered',
-    'BookCopyRegistered',
-    'MemberRegistered',
-    'MemberStatusUpdated',
-    'BookBorrowed',
-    'BookReturned',
-    'BookReserved',
-    'ReservationCancelled',
-    'ReservationAllocated',
-    'FineSettled',
-  ];
-
-  for (const eventName of eventNames) {
-    void contract.on(eventName, async (...args) => {
-      const eventPayload = args[args.length - 1] as { log?: ethers.Log };
-      if (eventPayload?.log) {
-        try {
-          await indexEventLog(contract, eventPayload.log);
-        } catch (err) {
-          console.error(`Failed indexing ${eventName}:`, err);
+  const poll = async () => {
+    if (isSyncing) return;
+    isSyncing = true;
+    try {
+      const provider = getProvider();
+      const latestBlock = await provider.getBlockNumber();
+      if (latestBlock < lastSyncedBlock) {
+        // Hardhat local chain was restarted
+        lastSyncedBlock = 0;
+      }
+      if (latestBlock >= lastSyncedBlock) {
+        const result = await syncPastEvents(lastSyncedBlock);
+        if (result.reachable) {
+          lastSyncedBlock = latestBlock + 1;
         }
       }
-    });
-  }
+    } catch {
+      // Hardhat node may be offline; retry on next poll
+    } finally {
+      isSyncing = false;
+    }
+  };
 
-  console.log('Blockchain event indexer initialized.');
+  void poll();
+  setInterval(() => {
+    void poll();
+  }, 4000);
+
+  console.log('Blockchain event indexer initialized (getLogs polling).');
 }
