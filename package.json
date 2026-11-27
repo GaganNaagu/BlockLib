@@ -18,6 +18,8 @@
     "build:api": "npm --workspace=apps/api run build",
     "prisma:generate": "prisma generate --schema=prisma/schema.prisma",
     "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
-    "prisma:seed": "npm --workspace=apps/api run prisma:seed"
+    "prisma:seed": "npm --workspace=apps/api run prisma:seed",
+    "demo:seed": "npm --workspace=apps/blockchain run deploy && npm --workspace=apps/blockchain run seed:demo",
+    "demo:reset": "npx prisma migrate reset --force --schema=prisma/schema.prisma && npm run prisma:seed && npm run demo:seed"
   }
 }

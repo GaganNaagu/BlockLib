@@ -77,35 +77,35 @@ Authoritative specification: [BlockLib_PLAN.md](../BlockLib_PLAN.md)
 - [x] My Transactions view
 
 ### Phase 8 — End-to-end testing
-- [ ] Verify full 15-step scenario with 1 admin wallet and 2+ student wallets
-- [ ] Verify overdue fine calculation with controlled local-chain time
+- [x] Verify full 15-step scenario with 1 admin wallet and 2+ student wallets (`E2E.test.ts`)
+- [x] Verify overdue fine calculation with controlled local-chain time
 
 ### Phase 9 — Final quality and documentation
-- [ ] Run all contract tests, frontend build/typecheck, backend typecheck/tests
-- [ ] Prepare seed data and reset/redeploy commands
-- [ ] Write `docs/setup.md`, `docs/smart-contracts.md`, `docs/testing.md`, `docs/demo-script.md`
-- [ ] Update `README.md` and capture genuine screenshots
+- [x] Run all contract tests, frontend build/typecheck, backend typecheck
+- [x] Prepare seed data and reset/redeploy commands (`demo:reset`, `seed-demo.ts`, `start-blocklib.bat`, `start-blocklib.sh`)
+- [x] Write `docs/setup.md`, `docs/smart-contracts.md`, `docs/testing.md`, `docs/demo-script.md`, `docs/viva-guide.md`
+- [x] Update `README.md` with complete setup and demo instructions
 
 ---
 
 ## Mandatory Test & Demonstration Scenarios (Section 11)
-- [ ] 1. Register book — confirmed transaction
-- [ ] 2. Register physical copies — unique copies recorded
-- [ ] 3. Register member — member wallet registered
-- [ ] 4. View catalogue — book and copy availability visible
-- [ ] 5. Borrow available copy — lending record created
-- [ ] 6. Borrow same copy again — transaction rejected
-- [ ] 7. Borrow as inactive/unregistered member — transaction rejected
-- [ ] 8. Exceed active loan limit (max 3) — transaction rejected
-- [ ] 9. Reserve unavailable title — reservation recorded
-- [ ] 10. Cancel own reservation — reservation cancelled
-- [ ] 11. Return borrowed book — return recorded
-- [ ] 12. Return same loan twice — transaction rejected
-- [ ] 13. Return overdue book — fine calculated automatically
-- [ ] 14. View outstanding fine — correct balance displayed
-- [ ] 15. Settle fine — settlement transaction confirmed
-- [ ] 16. Return copy with waiting reservation — next valid reservation receives priority
-- [ ] 17. View transaction history — hash, block, and event visible
+- [x] 1. Register book — confirmed transaction
+- [x] 2. Register physical copies — unique copies recorded
+- [x] 3. Register member — member wallet registered
+- [x] 4. View catalogue — book and copy availability visible
+- [x] 5. Borrow available copy — lending record created
+- [x] 6. Borrow same copy again — transaction rejected
+- [x] 7. Borrow as inactive/unregistered member — transaction rejected
+- [x] 8. Exceed active loan limit (max 3) — transaction rejected
+- [x] 9. Reserve unavailable title — reservation recorded
+- [x] 10. Cancel own reservation — reservation cancelled
+- [x] 11. Return borrowed book — return recorded
+- [x] 12. Return same loan twice — transaction rejected
+- [x] 13. Return overdue book — fine calculated automatically
+- [x] 14. View outstanding fine — correct balance displayed
+- [x] 15. Settle fine — settlement transaction confirmed
+- [x] 16. Return copy with waiting reservation — next valid reservation receives priority
+- [x] 17. View transaction history — hash, block, and event visible
 
 ---
 
