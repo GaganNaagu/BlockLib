@@ -1,10 +1,25 @@
 import type { NextFunction, Request, Response } from 'express';
 import { prisma } from '../config/prisma.js';
 import { sendSuccess } from '../utils/apiResponse.js';
-import { getReadOnlyLibraryContract } from '../blockchain/libraryClient.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { getProvider, getReadOnlyLibraryContract } from '../blockchain/libraryClient.js';
 
 const LENDING_STATUS_MAP = ['ACTIVE', 'RETURNED'] as const;
 const RESERVATION_STATUS_MAP = ['WAITING', 'ALLOCATED', 'CANCELLED', 'FULFILLED'] as const;
+
+async function ensureContractDeployed(
+  contract: NonNullable<ReturnType<typeof getReadOnlyLibraryContract>>,
+): Promise<void> {
+  const address = await contract.getAddress();
+  const code = await getProvider().getCode(address);
+  if (code === '0x') {
+    throw new AppError(
+      503,
+      'CONTRACT_NOT_DEPLOYED',
+      `Library contract is not deployed at ${address} on the running Hardhat node. Run "npm run deploy:blockchain" and ensure .env matches.`,
+    );
+  }
+}
 
 export async function listLendingRecords(
   req: Request,
@@ -19,6 +34,7 @@ export async function listLendingRecords(
       sendSuccess(res, { records: [] });
       return;
     }
+    await ensureContractDeployed(contract);
 
     const nextLendingId = Number(await contract.nextLendingId());
     const [users, copies] = await Promise.all([
@@ -78,6 +94,7 @@ export async function listReservations(
       sendSuccess(res, { reservations: [] });
       return;
     }
+    await ensureContractDeployed(contract);
 
     const nextReservationId = Number(await contract.nextReservationId());
     const [users, books] = await Promise.all([

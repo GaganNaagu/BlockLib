@@ -32,7 +32,8 @@ export function loadLibraryConfig(): { address: string; abi: ethers.InterfaceAbi
 
   if (fs.existsSync(DEPLOYMENT_PATH)) {
     const deployment = JSON.parse(fs.readFileSync(DEPLOYMENT_PATH, 'utf8')) as DeploymentArtifact;
-    if (!address && deployment.address) {
+    // Prefer the latest local deployment artifact so re-deploys on Hardhat Local work immediately
+    if (deployment.address) {
       address = deployment.address;
     }
     if (deployment.abi) {
