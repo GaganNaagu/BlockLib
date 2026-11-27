@@ -20,6 +20,7 @@
     "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
     "prisma:seed": "npm --workspace=apps/api run prisma:seed",
     "demo:seed": "npm --workspace=apps/blockchain run deploy && npm --workspace=apps/blockchain run seed:demo",
-    "demo:reset": "npx prisma migrate reset --force --schema=prisma/schema.prisma && npm run prisma:seed && npm run demo:seed"
+    "demo:reset": "npx prisma migrate reset --force --schema=prisma/schema.prisma && npm run prisma:seed && npm run demo:seed",
+    "demo:advance-time": "npm --workspace=apps/blockchain run advance-time"
   }
 }
