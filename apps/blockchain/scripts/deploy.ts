@@ -40,9 +40,31 @@ async function main(): Promise<void> {
   );
 
   console.log(`Exported Library ABI & address to: ${exportPath}`);
-  console.log('\nAdd these to your root .env:');
-  console.log(`LIBRARY_CONTRACT_ADDRESS=${contractAddress}`);
-  console.log(`VITE_LIBRARY_CONTRACT_ADDRESS=${contractAddress}`);
+
+  // Auto-create .env from .env.example if missing, and update contract addresses
+  const rootDir = path.resolve(__dirname, '../../..');
+  const envPath = path.join(rootDir, '.env');
+  const envExamplePath = path.join(rootDir, '.env.example');
+
+  if (!fs.existsSync(envPath) && fs.existsSync(envExamplePath)) {
+    fs.copyFileSync(envExamplePath, envPath);
+    console.log('Created .env from .env.example');
+  }
+
+  if (fs.existsSync(envPath)) {
+    let envContent = fs.readFileSync(envPath, 'utf8');
+    const upsertVar = (content: string, key: string, value: string): string => {
+      const regex = new RegExp(`^${key}=.*$`, 'm');
+      if (regex.test(content)) {
+        return content.replace(regex, `${key}=${value}`);
+      }
+      return `${content.trimEnd()}\n${key}=${value}\n`;
+    };
+    envContent = upsertVar(envContent, 'LIBRARY_CONTRACT_ADDRESS', contractAddress);
+    envContent = upsertVar(envContent, 'VITE_LIBRARY_CONTRACT_ADDRESS', contractAddress);
+    fs.writeFileSync(envPath, envContent, 'utf8');
+    console.log('Updated LIBRARY_CONTRACT_ADDRESS and VITE_LIBRARY_CONTRACT_ADDRESS in .env');
+  }
 }
 
 main().catch((err) => {

@@ -55,6 +55,31 @@ async function main(): Promise<void> {
     }
   }
 
+  // Generate local-only Accounts.md (gitignored) with MetaMask test keys for demo convenience
+  const mnemonic = ethers.Mnemonic.fromPhrase(
+    'test test test test test test test test test test test junk',
+  );
+  const w0 = ethers.HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/0");
+  const w1 = ethers.HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/1");
+  const w2 = ethers.HDNodeWallet.fromMnemonic(mnemonic, "m/44'/60'/0'/0/2");
+
+  const accountsDoc = `# BlockLib Local Demo Accounts (Generated — Do Not Commit)
+
+## Application Login & MetaMask Mapping
+
+| Role | Name | Email | Password | MetaMask Address | Hardhat Local Private Key |
+|---|---|---|---|---|---|
+| **Admin** | Library Administrator | \`admin@blocklib.edu\` | \`Admin@123\` | \`${w0.address}\` | \`${w0.privateKey}\` |
+| **Student 1** | Gagan S G | \`student1@blocklib.edu\` | \`Student@123\` | \`${w1.address}\` | \`${w1.privateKey}\` |
+| **Student 2** | Ekanth LS | \`student2@blocklib.edu\` | \`Student@123\` | \`${w2.address}\` | \`${w2.privateKey}\` |
+
+> **Local Development Only:** These keys belong to Hardhat's deterministic local test network (\`Chain ID: 31337\`). Never use them on mainnet.
+`;
+
+  const accountsPath = path.resolve(__dirname, '../../../Accounts.md');
+  fs.writeFileSync(accountsPath, accountsDoc, 'utf8');
+  console.log(`Generated local demo accounts guide at: ${accountsPath}`);
+
   console.log('Demo blockchain seed complete.');
 }
 
